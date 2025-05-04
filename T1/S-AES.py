@@ -177,6 +177,11 @@ sbox = ['1001', '0100', '1010', '1011', '1101', '0001', '1000', '0101', '0110', 
 # Entrada de dados
 print("AES Simplificado")
 msg = text_to_bin(input("Digite a mensagem: "))
+
+if len(msg) % 16 != 0: # Verifica se a mensagem é um multiplo 16 bits
+    print("Número ímpar de caracteres, adicionando caracter 0 ao final.")
+    msg += '00110000'
+    
 print("Mensagem em binário: ", msg) # Mostra a mensagem em binário
 
 key = '1001011001011010'  # Chave K0
@@ -221,10 +226,16 @@ for i in range(len(state)):
     print('Add Round Key K2:')
     print(state[i])
 
+# Mostra o resultado final em binário, hexadecimal e base64
 states_bin = ''.join([''.join(row) for substate in state for row in substate])
 states_hex = bin_to_hex(states_bin)
 states_base64 = bin_to_base64(states_bin)
 
-print("Mensagem cifrada: ", states_bin)
-print("Mensagem cifrada em hexadecimal: ", states_hex)
-print("Mensagem cifrada em base64: ", states_base64)
+print("Mensagem cifrada em blocos de 16 bits:")
+bloco = 1
+for i in range(0, len(states_bin), 16):
+    print(f'Bloco {bloco}: ')
+    print('Bin: ', states_bin[i:i+16])
+    print('Hex: ', bin_to_hex(states_bin[i:i+16]))
+    print('B64: ', bin_to_base64(states_bin[i:i+16]))
+    bloco += 1
