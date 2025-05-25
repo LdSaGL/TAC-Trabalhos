@@ -2,6 +2,7 @@ import json
 import base64
 import hmac
 import hashlib
+import hmac_key
 from datetime import datetime, timedelta, timezone
 
 from cryptography.hazmat.primitives import hashes
@@ -11,7 +12,7 @@ from cryptography.hazmat.primitives.serialization import (
 )
 
 # Secret used for HMAC (HS256)
-SECRET_KEY = b'ananas'
+SECRET_KEY = hmac_key.SECRET_KEY
 
 # RSA key files (same as used for HTTPS)
 PRIVATE_KEY_FILE = "key.pem"
