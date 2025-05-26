@@ -102,10 +102,10 @@ class SimpleHandler(BaseHTTPRequestHandler):
             self.wfile.write(f"Error while registering: {e}".encode())
 
 def run():
-    server_address = ('', 8000)
+    server_address = ('', 8000)dfasdfjk
     httpd = HTTPServer(server_address, SimpleHandler)
 
-    # Envolve o socket com TLS
+    # Wrap the socket with TLS
     httpd.socket = ssl.wrap_socket(httpd.socket,
                                    server_side=True,
                                    certfile='cert.pem',

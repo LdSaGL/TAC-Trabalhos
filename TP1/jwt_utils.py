@@ -11,12 +11,12 @@ from cryptography.hazmat.primitives.serialization import (
     load_pem_private_key, load_pem_public_key
 )
 
-# Secret used for HMAC (HS256)
+# Secret used for HMAC
 SECRET_KEY = hmac_key.SECRET_KEY
 
-# RSA key files (same as used for HTTPS)
-PRIVATE_KEY_FILE = "key.pem"
-PUBLIC_KEY_FILE = "cert.pem"
+# RSA key files
+PRIVATE_KEY_FILE = "jwt_private.pem"
+PUBLIC_KEY_FILE = "jwt_public.pem"
 
 # Encodes data in Base64 URL format without padding
 def base64url_encode(data: bytes) -> bytes:
@@ -71,7 +71,7 @@ def verify_jwt(token: str) -> dict | None:
     try:
         # Split token into parts
         header_b64, payload_b64, signature_b64 = token.split(".")
-        to_verify = f"{header_b64}.{payload_b64}".encode()
+        to_verify = to_verify = header_b64.encode() + b"." + payload_b64.encode()
         signature = base64url_decode(signature_b64)
 
         # Decode and read header to check algorithm
@@ -82,7 +82,7 @@ def verify_jwt(token: str) -> dict | None:
         if alg == "HS256":
             expected = hmac.new(SECRET_KEY, to_verify, hashlib.sha256).digest()
             if not hmac.compare_digest(expected, signature):
-                return None  # Invalid HMAC signature
+                return None
         elif alg == "RS256":
             public_key = load_public_key()
             public_key.verify(
@@ -90,7 +90,7 @@ def verify_jwt(token: str) -> dict | None:
                 to_verify,
                 padding.PKCS1v15(),
                 hashes.SHA256()
-            )  # Raises exception if invalid
+            ) 
         else:
             return None  # Unsupported algorithm
 
@@ -103,4 +103,4 @@ def verify_jwt(token: str) -> dict | None:
         return payload  # Token is valid
 
     except Exception:
-        return None  # Any error means the token is invalid
+        return None
