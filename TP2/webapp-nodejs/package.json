@@ -1,0 +1,28 @@
+{
+    "name": "webapp-nodejs-tp2",
+    "version": "1.0.0",
+    "description": "A web application using Express and MongoDB",
+    "main": "src/server.js",
+    "scripts": {
+        "start": "node src/server.js",
+        "dev": "nodemon src/server.js"
+    },
+    "keywords": [
+        "express",
+        "mongodb",
+        "webapp",
+        "security"
+    ],
+    "author": "LdSaGL",
+    "license": "ISC",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "dependencies": {
+        "express": "^4.19.2",
+        "mongoose": "^8.4.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.3"
+    }
+}

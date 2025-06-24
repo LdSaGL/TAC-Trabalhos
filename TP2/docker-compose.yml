@@ -1,0 +1,25 @@
+# Docker Compose file for a vulnerable Node.js web application with MongoDB
+# This setup is intended for educational purposes only.
+services:
+  mongo:
+    image: mongo:5.0
+    container_name: nosql_db
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+
+  webapp:
+    build:
+      context: ./webapp-nodejs
+      dockerfile: Dockerfile
+    container_name: webapp-nodejs-tp2
+    restart: always
+    ports:
+      - "8080:3000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/webapp_db
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
