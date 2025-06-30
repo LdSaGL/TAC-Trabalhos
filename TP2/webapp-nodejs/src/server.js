@@ -2,10 +2,11 @@ const express = require("express");
 const { mongoose } = require("mongoose");
 
 const app = express();
+app.use(express.static("public")); // Serve static files from the 'public' directory
 app.use(express.json()); // Server to understand JSON requests
 
 const PORT = 3000;
-const MONGO_URL = proccess.env.MONGO_URL;
+const MONGO_URL = process.env.MONGO_URL;
 
 // Schema and Model
 const userSchema = new mongoose.Schema({
@@ -55,13 +56,11 @@ app.post("/login", async (req, res) => {
     const user = await User.findOne(userInput);
 
     if (user) {
-      res
-        .status(200)
-        .json({
-          message: "Successful login",
-          user: user.username,
-          role: user.role,
-        });
+      res.status(200).json({
+        message: "Successful login",
+        user: user.username,
+        role: user.role,
+      });
     } else {
       res.status(401).json({ message: "Invalid credentials" });
     }
