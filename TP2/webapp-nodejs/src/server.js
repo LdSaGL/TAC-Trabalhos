@@ -71,7 +71,7 @@ app.post("/login", async (req, res) => {
 
 // Connect to MongoDB and start the server
 connectDB().then(() => {
-  app.listen(PORT, () => {
+  app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
 });

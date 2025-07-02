@@ -16,12 +16,23 @@ services:
       dockerfile: Dockerfile
     container_name: webapp-nodejs-tp2
     restart: always
-    ports:
-      - "8080:3000"
     environment:
       - MONGO_URL=mongodb://mongo:27017/webapp_db
     depends_on:
       - mongo
+
+    # WAF/REVERSE PROXY
+  reverse-proxy-waf:
+    image: owasp/modsecurity-crs:nginx
+    container_name: waf_firewall
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - BACKEND=http://webapp:3000
+      - SecRuleEngine=On
+    depends_on:
+      - webapp
 
 volumes:
   mongo_data:
