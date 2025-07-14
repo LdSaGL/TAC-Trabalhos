@@ -1,0 +1,42 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80" # externo:interno
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    restart: unless-stopped
+    depends_on:
+      - webapp
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+
+  webapp:
+    build: ./webapp
+    restart: unless-stopped
+    ports:
+      - "3000:3000" # externo:interno
+
+  attacker1:
+    build: ./attacker
+    depends_on:
+      - nginx
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    stdin_open: true
+    tty: true
+
+  attacker2:
+    build: ./attacker
+    depends_on:
+      - nginx
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    stdin_open: true
+    tty: true

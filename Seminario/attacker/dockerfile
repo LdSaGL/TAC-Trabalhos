@@ -1,0 +1,4 @@
+FROM python:3.11
+WORKDIR /attack
+COPY attack.py .
+CMD ["python", "attack.py"]
