@@ -2,8 +2,8 @@ import socket
 import time
 import threading
 
-HOST = "webapp"
-PORT = 3000
+HOST = "nginx"
+PORT = 80
 SOCKETS_PER_THREAD = 200
 TOTAL_SOCKETS = 2000
 HEADER_INTERVAL = 3

@@ -22,7 +22,7 @@ services:
   attacker1:
     build: ./attacker
     depends_on:
-      - webapp
+      - nginx
     ulimits:
       nofile:
         soft: 65535
@@ -33,7 +33,7 @@ services:
   attacker2:
     build: ./attacker
     depends_on:
-      - webapp
+      - nginx
     ulimits:
       nofile:
         soft: 65535
