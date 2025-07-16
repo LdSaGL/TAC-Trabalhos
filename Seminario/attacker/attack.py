@@ -2,11 +2,11 @@ import socket
 import time
 import threading
 
-HOST = "nginx"
-PORT = 80
-SOCKETS_PER_THREAD = 15
-TOTAL_SOCKETS = 150
-HEADER_INTERVAL = 10
+HOST = "webapp"
+PORT = 3000
+SOCKETS_PER_THREAD = 200
+TOTAL_SOCKETS = 2000
+HEADER_INTERVAL = 3
 
 sockets = []
 lock = threading.Lock()

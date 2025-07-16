@@ -10,7 +10,7 @@ app.get("/api", (req, res) => {
 const server = http.createServer(app);
 
 // Limite de conexões simultâneas
-server.maxConnections = 200;
+server.maxConnections = 3000;
 
 server.on("connection", (socket) => {
   console.log(`Nova conexão aberta. Conexões ativas: ${server._connections}`);
