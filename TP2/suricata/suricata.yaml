@@ -1,0 +1,64 @@
+%YAML 1.1
+---
+runmode: autofp
+host-mode: sniffer-only
+
+pcap:
+  - interface: eth0
+    promisc: yes
+
+default-rule-path: /etc/suricata/rules
+rule-files:
+  - nosql-injection.rules
+
+outputs:
+  - fast:
+      enabled: yes
+      filename: /var/log/suricata/fast.log
+      append: yes
+
+  - eve-log:
+      enabled: yes
+      filetype: regular
+      filename: /var/log/suricata/eve.json
+      types:
+        - alert:
+            payload: yes
+            http: yes
+            metadata: yes
+            tagged-packets: yes
+        - http
+        - dns
+        - tls
+        - files
+
+  - stats:
+      enabled: yes
+      filename: /var/log/suricata/stats.log
+      totals: yes
+      threads: yes
+
+app-layer:
+  protocols:
+    http:
+      enabled: yes
+    tls:
+      enabled: yes
+    dns:
+      udp:
+        enabled: yes
+      tcp:
+        enabled: yes
+
+libhtp:
+  default-config:
+    personality: IDS
+    request-body-limit: 100kb
+    response-body-limit: 100kb
+    request-body-minimal-inspect-size: 32kb
+    request-body-inspect-window: 4kb
+    response-body-minimal-inspect-size: 40kb
+    response-body-inspect-window: 16kb
+
+threading:
+  set-cpu-affinity: no
